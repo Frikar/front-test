@@ -54,6 +54,6 @@ export class OrdersService {
    *
    */
   deleteData(id: number): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}v1/orders/${id}`)
+    return this.http.delete(`${environment.apiUrl}orders/${id}`)
   }
 }
