@@ -17,7 +17,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 Entre las mejoras que se pueden realizar a este proyecto se encuentran:
 
 - Crear módulos compartidos para los componentes que se puedan reusar
-- Añadir lazy loading para reducir la carga de Javascript del proyecto
+- Añadir lazy loading para reducir la carga de los componentes en el proyecto
 - Crear tests que puedan comprobar el correcto funcionamiento de todo el sistema
 - Depurar CSS no necesario en Tailwind y Daisy UI, el proyecto cuenta con más de 20 temas de colores que pueden ser purgados para mejorar el rendimiento del mismo en un ambiente de producción
 - Añadir paginación a las tablas, haciendo modificaciones a la API desarrollada previamente
