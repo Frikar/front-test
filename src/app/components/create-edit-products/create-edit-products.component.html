@@ -1,0 +1,136 @@
+<!-- Put this part before </body> tag -->
+<input type="checkbox" id="create-edit" class="modal-toggle"/>
+<div class="modal" (load)="setValue()">
+  <div class="modal-box relative w-320 overflow-auto">
+    <label for="create-edit" class="btn btn-sm btn-circle absolute right-2 top-2" (click)="close()">✕</label>
+    <h3 class="text-lg font-bold">{{modal}} Product</h3>
+    <p class="py-4">Fill the form</p>
+
+    <form class="w-full" [formGroup]="productsForm" (ngSubmit)="onSubmit()">
+      <input hidden formControlName="id_order" required>
+      <div *ngIf="modal === 'Create'; else editModal" class="grid grid-cols-2 gap-4">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Product Mark</span>
+          </label>
+          <input formControlName="product_mark" type="text" placeholder="e.g. Adidas, Nike"
+                 class="input input-bordered"/>
+          <label *ngIf="productMark?.invalid  && (productMark?.dirty || productMark?.touched)" class="label">
+            <span class="label-text-alt text-error" *ngIf="productMark?.errors?.['required']">Required</span>
+            <span class="label-text-alt text-error" *ngIf="productMark?.errors?.['pattern']">Invalid value</span>
+          </label>
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">SKU</span>
+          </label>
+          <input formControlName="sku" type="text" placeholder="e.g. DF3123, RESD56" class="input input-bordered"/>
+          <label *ngIf="sku?.invalid  && (sku?.dirty || sku?.touched)" class="label">
+            <span class="label-text-alt text-error" *ngIf="sku?.errors?.['required']">Required</span>
+            <span class="label-text-alt text-error" *ngIf="sku?.errors?.['pattern']">Invalid value</span>
+          </label>
+        </div>
+      </div>
+      <ng-template #editModal>
+        <input hidden formControlName="sku" type="text" placeholder="e.g. DF3123, RESD56" class="input input-bordered"/>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Product Mark</span>
+          </label>
+          <input formControlName="product_mark" type="text" placeholder="e.g. Adidas, Nike"
+                 class="input input-bordered"/>
+          <label *ngIf="productMark?.invalid  && (productMark?.dirty || productMark?.touched)" class="label">
+            <span class="label-text-alt text-error" *ngIf="productMark?.errors?.['required']">Required</span>
+            <span class="label-text-alt text-error" *ngIf="productMark?.errors?.['pattern']">Invalid value</span>
+          </label>
+        </div>
+      </ng-template>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Quantity</span>
+          </label>
+          <input formControlName="quantity" type="number" placeholder="e.g. 1, 5" class="input input-bordered" min="1"/>
+          <label *ngIf="quantity?.invalid  && (quantity?.dirty || quantity?.touched)" class="label">
+            <span class="label-text-alt text-error" *ngIf="quantity?.errors?.['required']">Required</span>
+          </label>
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Quantity Per Box</span>
+          </label>
+          <input formControlName="qty_box" type="number" placeholder="e.g. 2, 4" class="input input-bordered" min="1"/>
+          <label *ngIf="qtyBox?.invalid  && (qtyBox?.dirty || qtyBox?.touched)" class="label">
+            <span class="label-text-alt text-error" *ngIf="qtyBox?.errors?.['required']">Required</span>
+            <span class="label-text-alt text-error" *ngIf="qtyBox?.errors?.['pattern']">Invalid value</span>
+          </label>
+        </div>
+      </div>
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">Description</span>
+        </label>
+        <textarea formControlName="description" class="textarea textarea-bordered h-24"
+                  placeholder="Write a description" style="resize: none"></textarea>
+        <label *ngIf="description?.invalid  && (description?.dirty ||description?.touched)" class="label">
+          <span class="label-text-alt text-error" *ngIf="description?.errors?.['required']">Required</span>
+          <span class="label-text-alt text-error" *ngIf="description?.errors?.['pattern']">Invalid value</span>
+        </label>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Weight</span>
+          </label>
+          <input formControlName="weight" type="number" placeholder="e.g. 10, 20" class="input input-bordered"
+                 min="1.00" step="0.01"/>
+          <label *ngIf="weight?.invalid  && (weight?.dirty || weight?.touched)" class="label">
+            <span class="label-text-alt text-error" *ngIf="weight?.errors?.['required']">Required</span>
+          </label>
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Product Unit</span>
+          </label>
+          <select formControlName="unit" class="select select-bordered" required>
+            <option disabled selected>Unit:</option>
+            <option value="kg">Kg</option>
+            <option value="libras">Lbs</option>
+          </select>
+          <label *ngIf="unit?.invalid  && (unit?.dirty || unit?.touched)" class="label">
+            <span class="label-text-alt text-error" *ngIf="unit?.errors?.['required']">Required</span>
+          </label>
+        </div>
+      </div>
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">Value Per Unit</span>
+        </label>
+        <input formControlName="value_unit" type="number" placeholder="e.g. 100, 300" class="input input-bordered"
+               min="1.00" step="0.01"/>
+        <label *ngIf="valueUnit?.invalid  && (valueUnit?.dirty || valueUnit?.touched)" class="label">
+          <span class="label-text-alt text-error" *ngIf="valueUnit?.errors?.['required']">Required</span>
+          <span class="label-text-alt text-error" *ngIf="valueUnit?.errors?.['pattern']">Invalid value</span>
+        </label>
+      </div>
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">Select status</span>
+        </label>
+        <select formControlName="status" class="select select-bordered" required>
+          <option disabled selected>Status:</option>
+          <option value="0">Inactive</option>
+          <option value="1">Active</option>
+        </select>
+        <label *ngIf="status?.invalid  && (status?.dirty || status?.touched)" class="label">
+          <span class="label-text-alt text-error" *ngIf="status?.errors?.['required']">Required</span>
+        </label>
+      </div>
+      <div class="form-control justify-between flex-row gap-4 mt-5">
+        <label for="create-edit" class="btn-md btn btn-error rounded-3xl" (click)="close()">Discard</label>
+        <input type="submit" value="Save Order" class="btn-success btn-md btn rounded-3xl" [disabled]="productsForm?.invalid"/>
+      </div>
+    </form>
+  </div>
+</div>
+

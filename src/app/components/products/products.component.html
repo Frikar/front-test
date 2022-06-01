@@ -1,0 +1,83 @@
+<main class="flex justify-center flex-col">
+  <div class="gap-4 my-3 p-4 flex justify-center uppercase">
+    <h1 class="text-4xl text-center">
+      <span class="text-4xl cursor-pointer" [routerLink]="['/']">
+        <fa-icon [icon]="faArrow"></fa-icon>
+      </span>
+      Products for Order Id: {{idOrder}}</h1>
+  </div>
+  <div class="flex justify-center p-4 mb-3">
+    <label for="create-edit" class="btn btn-active btn-primary btn-wide modal-button rounded-3xl gap-2"
+           (click)="changeModalCreate()">
+      <span class="text-2xl">
+        <fa-icon [icon]="faPlusCircle"></fa-icon>
+      </span>
+      Add New Product</label>
+  </div>
+  <div class="flex justify-center w-full mb-8 overflow-x-auto overflow-y-hidden">
+    <table class="table w-11/12 p-10 table-zebra">
+      <!-- head -->
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Mark</th>
+        <th>SKU</th>
+        <th>Description</th>
+        <th>Value</th>
+        <th>Quantity</th>
+        <th>Box Quantity</th>
+        <th>Weight</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- row 1 -->
+      <tr *ngFor="let product of products" class="hover">
+        <td>{{product.IdOrdersProducts}}</td>
+        <td>{{product.Mark}}</td>
+        <td>{{product.SKU}}</td>
+        <td class="truncate max-w-sm">{{product.Description}}</td>
+        <td>{{product.ValueUnit | currency:'USD'}}</td>
+        <td>{{product.Quantity}}</td>
+        <td>{{product.QtyBox}}</td>
+        <td>{{product.Weight}} {{product.Unit}}</td>
+        <td>
+          <div *ngIf="product.Status == '0'" class="badge badge-outline badge-error">Inactive</div>
+          <div *ngIf="product.Status == '1'" class="badge badge-outline badge-success">Active</div>
+        </td>
+        <th>
+          <div class="flex gap-4">
+            <!--            <div class="tooltip" data-tip="View Products">-->
+            <!--              <button class="btn btn-circle btn-secondary text-xl" [routerLink]="['/order', order.IdOrder]">-->
+            <!--                <fa-icon [icon]="faSearch"></fa-icon>-->
+            <!--              </button>-->
+            <!--            </div>-->
+            <div class="tooltip" data-tip="Edit Product">
+              <label for="create-edit" (click)="updateModal(product.IdOrdersProducts)"
+                     class="btn btn-circle btn-warning text-xl">
+                <fa-icon [icon]="faEdit"></fa-icon>
+              </label>
+            </div>
+            <div class="tooltip" data-tip="Delete Product">
+              <button class="btn btn-circle btn-error" (click)="deleteProduct(product.IdOrdersProducts)">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </th>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="text-2xl flex justify-center mb-10" *ngIf="!products?.length">
+    No products in list
+  </div>
+</main>
+<!--Componente del modal con sus eventos y props-->
+<products-create-edit *ngIf="loaded" [modal]="this.modal" [orderId]="idOrder" (updated)="updateProduct($event)"
+                      (created)="createProduct($event)" (closed)="modalEvent()"
+                      [product]="this.product"></products-create-edit>

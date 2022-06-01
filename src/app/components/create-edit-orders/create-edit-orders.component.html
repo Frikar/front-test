@@ -1,0 +1,87 @@
+<!-- Put this part before </body> tag -->
+<input type="checkbox" id="create-edit" class="modal-toggle"/>
+<div class="modal">
+  <div class="modal-box relative w-320 overflow-auto">
+    <label for="create-edit" class="btn btn-sm btn-circle absolute right-2 top-2" (click)="close()">✕</label>
+    <h3 class="text-lg font-bold">{{modal}} Order</h3>
+    <p class="py-4">Fill the form</p>
+
+    <form class="w-full" [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Select user from list</span>
+          </label>
+          <select formControlName="id_user" class="select select-bordered" required>
+            <option disabled selected>Pick one</option>
+            <option *ngFor="let user of users" value="{{user.IdUser}}">{{user.Name}}</option>
+          </select>
+          <label *ngIf="idUser?.invalid  && (idUser?.dirty || idUser?.touched)" class="label">
+            <span class="label-text-alt text-error" *ngIf="idUser?.errors?.['required']">Required</span>
+          </label>
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Order Number</span>
+          </label>
+          <input formControlName="order_number" type="text" placeholder="e.g. 1, 4, 6" class="input input-bordered"/>
+          <label *ngIf="orderNumber?.invalid  && (orderNumber?.dirty || orderNumber?.touched)" class="label">
+            <span class="label-text-alt text-error" *ngIf="orderNumber?.errors?.['required']">Required</span>
+            <span class="label-text-alt text-error" *ngIf="orderNumber?.errors?.['pattern']">Invalid value</span>
+          </label>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Order Date</span>
+          </label>
+          <input formControlName="datetime" type="datetime-local" placeholder="e.g. 2022-05-31"
+                 class="input input-bordered" style="resize: none"/>
+          <label *ngIf="dateTime?.invalid  && (dateTime?.dirty || dateTime?.touched)" class="label">
+            <span class="label-text-alt text-error" *ngIf="dateTime?.errors?.['required']">Required</span>
+          </label>
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Provider Name</span>
+          </label>
+          <input formControlName="provider_name" type="text" placeholder="e.g. Pedro, Eduardo"
+                 class="input input-bordered w-full max-w-xs"/>
+          <label *ngIf="providerName?.invalid  && (providerName?.dirty || providerName?.touched)" class="label">
+            <span class="label-text-alt text-error" *ngIf="providerName?.errors?.['required']">Required</span>
+            <span class="label-text-alt text-error" *ngIf="providerName?.errors?.['pattern']">Invalid value</span>
+          </label>
+        </div>
+      </div>
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">Observation</span>
+        </label>
+        <textarea formControlName="observation" class="textarea textarea-bordered h-24"
+                  placeholder="Write a observation" style="resize: none"></textarea>
+        <label *ngIf="observation?.invalid  && (observation?.dirty || observation?.touched)" class="label">
+          <span class="label-text-alt text-error" *ngIf="observation?.errors?.['required']">Required</span>
+          <span class="label-text-alt text-error" *ngIf="observation?.errors?.['pattern']">Invalid value</span>
+        </label>
+      </div>
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">Select status</span>
+        </label>
+        <select formControlName="status" class="select select-bordered" required>
+          <option disabled selected>Status:</option>
+          <option value="0">Inactive</option>
+          <option value="1">Active</option>
+        </select>
+        <label *ngIf="status?.invalid  && (status?.dirty || status?.touched)" class="label">
+          <span class="label-text-alt text-error" *ngIf="status?.errors?.['required']">Required</span>
+        </label>
+      </div>
+      <div class="form-control justify-between flex-row gap-4 mt-5">
+        <label for="create-edit" class="btn-md btn btn-error rounded-3xl" (click)="close()">Discard</label>
+        <input type="submit" value="Save Order" class="btn-success btn-md btn rounded-3xl" [disabled]="orderForm?.invalid"/>
+      </div>
+    </form>
+  </div>
+</div>
